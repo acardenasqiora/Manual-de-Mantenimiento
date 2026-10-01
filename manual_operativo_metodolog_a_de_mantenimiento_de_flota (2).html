@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual Operativo: Metodología y Reglas de Cumplimiento de Mantenimiento de Flota</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- KaTeX para fórmulas matemáticas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+  <style>
+    @font-face {
+      font-family: 'Century Gothic Local';
+      src: local('Century Gothic'), local('CenturyGothic'), local('AppleGothic');
+    }
+    body, * {
+      font-family: 'Century Gothic Local', 'Century Gothic', CenturyGothic, AppleGothic, system-ui, sans-serif;
+    }
+    @media print {
+      .no-print { display: none !important; }
+      body { background-color: #ffffff !important; font-size: 10.5pt; color: #111827 !important; }
+      .page-break { page-break-before: always; }
+      .shadow-sm, .shadow-md, .shadow-lg, .shadow-xl { box-shadow: none !important; }
+      .print-border { border: 1px solid #e2e8f0 !important; }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen selection:bg-[#3F8640] selection:text-white">
+
+  <!-- Barra de navegación y utilidades -->
+  <header class="no-print bg-white/95 backdrop-blur sticky top-0 z-50 border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <span class="inline-flex w-3 h-3 rounded-full bg-[#1E7E34] animate-pulse"></span>
+        <span class="text-xs md:text-sm font-bold tracking-tight text-slate-800 uppercase">
+          Control de Flota &bull; Manual de Operaciones y Cumplimiento
+        </span>
+      </div>
+      <div class="flex items-center space-x-2">
+        <button onclick="window.print()" class="flex items-center space-x-2 px-4 py-2 bg-[#1E7E34] hover:bg-[#166527] text-white text-xs md:text-sm font-semibold rounded-lg shadow-sm transition">
+          <i data-lucide="printer" class="w-4 h-4"></i>
+          <span>Imprimir / Exportar PDF</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 space-y-10">
+
+    <!-- Portada y Encabezado Ejecutivo -->
+    <section class="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-200/80 relative overflow-hidden">
+      <div class="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-[#1E7E34]/10 blur-3xl pointer-events-none"></div>
+      <div class="absolute right-40 -bottom-20 w-72 h-72 rounded-full bg-[#FBBF24]/10 blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 space-y-4">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1E7E34]/10 text-[#1E7E34] text-xs font-bold uppercase tracking-wider">
+          <i data-lucide="shield-check" class="w-4 h-4"></i>
+          Manual Normativo Oficial &bull; Versión Definitiva
+        </div>
+        
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+          Metodología y Reglas de Cumplimiento de Mantenimiento de Flota
+        </h1>
+        
+        <p class="text-base sm:text-lg text-slate-600 max-w-3xl leading-relaxed">
+          Marco técnico, estandarización de fuentes de datos, modelo temporal de transición y aplicación formal de la <strong class="text-slate-900 font-semibold">Ventana de Tolerancia Operativa</strong> y <strong class="text-slate-900 font-semibold">Promedio Móvil de Kilometraje</strong> para la evaluación de unidades vehiculares.
+        </p>
+
+        <div class="pt-4 flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-500 border-t border-slate-100">
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="calendar" class="w-4 h-4 text-[#1E7E34]"></i>
+            <span>Vigencia Operativa: Octubre 2026 en adelante</span>
+          </div>
+          <span class="text-slate-300">&bull;</span>
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="users" class="w-4 h-4 text-[#1E7E34]"></i>
+            <span>Destinatarios: Equipos Operativos, Logística, Taller y Dirección</span>
+          </div>
+          <span class="text-slate-300">&bull;</span>
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-[#1E7E34]"></i>
+            <span>Auditable y homologado</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. Objetivo del Documento -->
+    <section class="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/80 shadow-sm space-y-4">
+      <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+        <div class="w-10 h-10 rounded-xl bg-[#1E7E34]/10 text-[#1E7E34] flex items-center justify-center">
+          <i data-lucide="target" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="text-xs font-bold text-[#1E7E34] uppercase tracking-wider">Sección 01</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900">Objetivo del Documento</h2>
+        </div>
+      </div>
+      <p class="text-slate-700 leading-relaxed text-sm sm:text-base">
+        Brindar una <strong>guía transparente, comprensible y estandarizada</strong> sobre cómo se mide, clasifica y evalúa el cumplimiento de los mantenimientos de los vehículos de la flota. Cualquier integrante del equipo operativo o directivo puede consultar este documento para entender el origen de las cifras en los tableros de control, los criterios de evaluación temporal, el cálculo dinámico de rodamiento mediante promedios móviles y el significado exacto de cada estatus operativo, erradicando discrepancias de criterio entre áreas.
+      </p>
+    </section>
+
+    <!-- 2. Origen de la Información y Fuentes de Datos -->
+    <section class="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/80 shadow-sm space-y-6">
+      <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+        <div class="w-10 h-10 rounded-xl bg-[#1E7E34]/10 text-[#1E7E34] flex items-center justify-center">
+          <i data-lucide="database" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="text-xs font-bold text-[#1E7E34] uppercase tracking-wider">Sección 02</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900">Origen de la Información y Fuentes de Datos</h2>
+        </div>
+      </div>
+
+      <p class="text-sm text-slate-600 leading-relaxed">
+        El modelo analítico y normativo de control de flota se estructura a partir de la interconexión continua de <strong>cuatro bases de datos maestras y operativas</strong>, con frecuencias de captura diarias e históricas que aseguran trazabilidad integral y auditoría fidedigna:
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Fuente 1: Base Vehicular -->
+        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-4 hover:border-blue-300 transition-colors">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+              <h3 class="text-base font-bold text-slate-900">1. Base Vehicular (Maestro de Flota)</h3>
+            </div>
+            <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-blue-100 text-blue-800">Corte Diario</span>
+          </div>
+          <p class="text-xs text-slate-500 font-mono">Tabla Generadora: ULTIMO_NUMERO_UNICO / Catálogo Maestro</p>
+          
+          <ul class="space-y-3 text-xs sm:text-sm text-slate-700">
+            <li class="flex items-start gap-2">
+              <i data-lucide="hash" class="w-4 h-4 text-blue-600 mt-0.5 shrink-0"></i>
+              <span><strong>Catálogo ULTIMO_NUMERO_UNICO:</strong> Es el repositorio central de activos que identifica cada número económico único en circulación.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i data-lucide="history" class="w-4 h-4 text-blue-600 mt-0.5 shrink-0"></i>
+              <span><strong>Histórico Diario de Flota:</strong> La descarga diaria permite registrar y auditar la evolución cronológica del <strong>estatus más reciente</strong> de cada unidad.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i data-lucide="tag" class="w-4 h-4 text-blue-600 mt-0.5 shrink-0"></i>
+              <span><strong>Atributos Clave:</strong> Almacena y sincroniza la <strong>placa vehicular</strong>, la <strong>clasificación operativa</strong> (tipo de unidad/servicio) y la asignación técnica actual.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Fuente 2: Historial de Estatus de Unidades (Comportamiento de Unidades) -->
+        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-4 hover:border-emerald-300 transition-colors">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#1E7E34]"></span>
+              <h3 class="text-base font-bold text-slate-900">2. Historial de Estatus de Unidades</h3>
+            </div>
+            <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">Comportamiento Operativo</span>
+          </div>
+          <p class="text-xs text-slate-500 font-mono">Tabla: Historial de Comportamiento / Estatus Operativo de Unidades</p>
+          
+          <ul class="space-y-3 text-xs sm:text-sm text-slate-700">
+            <li class="flex items-start gap-2">
+              <i data-lucide="activity" class="w-4 h-4 text-[#1E7E34] mt-0.5 shrink-0"></i>
+              <span><strong>Comportamiento Integral de la Unidad:</strong> No constituye un desglose administrativo de órdenes de compra; es el registro histórico del estado y comportamiento operativo de cada vehículo en el tiempo (disponible, en ruta, en patio, asignado o en mantenimiento).</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i data-lucide="calendar-check" class="w-4 h-4 text-[#1E7E34] mt-0.5 shrink-0"></i>
+              <span><strong>Fecha Cierre de Ingreso a Taller (FECHA CERRO):</strong> Marca temporal certificada en la que el estatus de la unidad concluyó formalmente el evento de mantenimiento o taller.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i data-lucide="shield-alert" class="w-4 h-4 text-[#1E7E34] mt-0.5 shrink-0"></i>
+              <span><strong>Acreditación de Cumplimiento:</strong> Constituye la evidencia técnica fundamental para dar por atendida y cumplida una unidad en el mes evaluado dentro del tablero.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Fuente 3: Kilómetros Acumulados y Serie Histórica -->
+        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-4 hover:border-purple-300 transition-colors">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span>
+              <h3 class="text-base font-bold text-slate-900">3. Kilómetros Acumulados e Histórico</h3>
+            </div>
+            <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-purple-100 text-purple-800">Descarga Diaria &amp; Serie</span>
+          </div>
+          <p class="text-xs text-slate-500 font-mono">Tabla: Kilómetros Acumulados Diarios / Odometría Histórica</p>
+          
+          <ul class="space-y-3 text-xs sm:text-sm text-slate-700">
+            <li class="flex items-start gap-2">
+              <i data-lucide="gauge" class="w-4 h-4 text-purple-600 mt-0.5 shrink-0"></i>
+              <span><strong>Kilometraje Más Reciente:</strong> Lectura oficial actualizada del odómetro para cada unidad de la flota.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i data-lucide="trending-up" class="w-4 h-4 text-purple-600 mt-0.5 shrink-0"></i>
+              <span><strong>Histórico Cronológico Diario:</strong> Gracias a su extracción y almacenamiento diario continuo, genera una serie temporal indispensable sobre el ritmo de rodamiento.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i data-lucide="calculator" class="w-4 h-4 text-purple-600 mt-0.5 shrink-0"></i>
+              <span><strong>Motor del Promedio Móvil:</strong> Es la fuente directa que permite calcular el <strong>Promedio Móvil de Kilometraje</strong> (ventana de 60 días), proyectando con precisión el desgaste real del vehículo.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Fuente 4: Histórico Congelado de Proyecciones -->
+        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-4 hover:border-amber-300 transition-colors">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#F59E0B]"></span>
+              <h3 class="text-base font-bold text-slate-900">4. Histórico Congelado de Proyecciones</h3>
+            </div>
+            <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-amber-100 text-amber-800">Foto Inmutable</span>
+          </div>
+          <p class="text-xs text-slate-500 font-mono">Tabla: Histórico de Mantenimientos Programados (Foto de Corte)</p>
+          
+          <ul class="space-y-3 text-xs sm:text-sm text-slate-700">
+            <li class="flex items-start gap-2">
+              <i data-lucide="camera" class="w-4 h-4 text-[#F59E0B] mt-0.5 shrink-0"></i>
+              <span><strong>Fecha_de_Corte:</strong> Marca de tiempo en la que se congela la programación original establecida para el periodo operativo.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i data-lucide="calendar-clock" class="w-4 h-4 text-[#F59E0B] mt-0.5 shrink-0"></i>
+              <span><strong>Fecha_Proyectada_Congelada:</strong> Fecha límite pactada originalmente antes de que la unidad ingrese a taller.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i data-lucide="lock" class="w-4 h-4 text-[#F59E0B] mt-0.5 shrink-0"></i>
+              <span><strong>Inmutabilidad Auditora:</strong> Evita que los recálculos automáticos del sistema borren la meta original comprometida.</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Diagrama de Interconexión de Bases -->
+      <div class="p-5 rounded-2xl bg-slate-900 text-white space-y-3">
+        <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#91DD37]">
+          <i data-lucide="git-merge" class="w-4 h-4"></i>
+          <span>Interconexión de Fuentes en el Motor de Evaluación</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
+          <div class="bg-white/10 p-3 rounded-xl border border-white/10">
+            <strong class="text-blue-300 block mb-1">Base Vehicular</strong>
+            <span class="text-slate-300 text-[11px]">Define el universo activo, número único, placas, clasificación e histórico diario de estatus.</span>
+          </div>
+          <div class="bg-white/10 p-3 rounded-xl border border-white/10">
+            <strong class="text-emerald-300 block mb-1">Historial de Estatus</strong>
+            <span class="text-slate-300 text-[11px]">Registra el comportamiento operativo de la unidad y certifica la fecha real en la que el evento cerró.</span>
+          </div>
+          <div class="bg-white/10 p-3 rounded-xl border border-white/10">
+            <strong class="text-purple-300 block mb-1">Kilómetros Acumulados</strong>
+            <span class="text-slate-300 text-[11px]">Histórico diario que calcula el promedio móvil a 60 días y el odómetro actual.</span>
+          </div>
+          <div class="bg-white/10 p-3 rounded-xl border border-white/10">
+            <strong class="text-amber-300 block mb-1">Histórico Congelado</strong>
+            <span class="text-slate-300 text-[11px]">Aporta la fecha proyectada original inmutable para contrastar la tolerancia.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Justificación del Histórico Congelado -->
+      <div class="p-5 rounded-2xl bg-amber-50/70 border-l-4 border-[#FBBF24] text-slate-800 space-y-2">
+        <div class="flex items-center gap-2 text-amber-900 font-bold text-sm">
+          <i data-lucide="alert-circle" class="w-4 h-4 text-[#F59E0B]"></i>
+          <span>Justificación Operativa del Histórico Congelado frente a Datos en Vivo</span>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+          En los sistemas informáticos de flota, en cuanto una unidad concluye su mantenimiento y se registra la fecha en la que el estatus en taller cerró (ejemplo: 15 de septiembre), el motor de base de datos recalcula y proyecta inmediatamente el siguiente servicio hacia meses posteriores o hacia el siguiente año. 
+          <strong>Sin una fotografía congelada tomada al inicio del corte, el sistema pierde el registro del compromiso original del periodo evaluado.</strong> El histórico congelado garantiza una auditoría fidedigna e inmutable, permitiendo contrastar la fecha de cierre real contra el plan que estaba vigente.
+        </p>
+      </div>
+    </section>
+
+    <!-- 3. Metodología de Cálculo: Promedio Móvil de Kilometraje -->
+    <section class="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/80 shadow-sm space-y-6">
+      <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+        <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+          <i data-lucide="line-chart" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="text-xs font-bold text-purple-600 uppercase tracking-wider">Sección 03</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900">Promedio Móvil de Kilometraje (Ventana de 60 Días)</h2>
+        </div>
+      </div>
+
+      <p class="text-sm text-slate-700 leading-relaxed">
+        A partir de la base de <strong>Kilómetros Acumulados</strong> descargada diariamente, se construye el historial cronológico que permite calcular con rigor técnico el recorrido diario esperado de cada unidad. Para amortiguar anomalías por días inhábiles, periodos en taller o picos inusuales de ruta, se aplica una ventana móvil de observación de aproximadamente <strong>60 días por unidad</strong>.
+      </p>
+
+      <!-- Tarjeta Fórmula Técnica -->
+      <div class="p-6 rounded-2xl bg-slate-900 text-white space-y-4">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <span class="text-xs font-bold uppercase tracking-wider text-[#91DD37] flex items-center gap-1.5">
+            <i data-lucide="code" class="w-4 h-4"></i> Formulación Oficial de Promedio Móvil
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Ventana: ~60 Días de Operación</span>
+        </div>
+
+        <div class="p-4 rounded-xl bg-white/5 border border-white/10 font-mono text-xs sm:text-sm text-emerald-300">
+          $$\text{PROMEDIO\_KM\_DIA\_60D} = \frac{\text{KM\_ACTUAL} - \text{KM\_INICIAL\_60D}}{\text{DIAS\_TRANSCURRIDOS}}$$
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-300 pt-2 border-t border-white/10">
+          <div>
+            <strong class="text-white block mb-1">KM_ACTUAL:</strong>
+            Último kilometraje registrado en el histórico acumulado al momento del corte.
+          </div>
+          <div>
+            <strong class="text-white block mb-1">KM_INICIAL_60D:</strong>
+            Kilometraje de la unidad registrado en la captura histórica más cercana a 60 días atrás.
+          </div>
+          <div>
+            <strong class="text-white block mb-1">DIAS_TRANSCURRIDOS:</strong>
+            Días naturales reales transcurridos entre la fecha inicial observada y la fecha actual.
+          </div>
+        </div>
+      </div>
+
+      <!-- Ventajas del enfoque -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <div class="flex items-center gap-2 text-slate-900 font-bold">
+            <i data-lucide="check" class="w-4 h-4 text-[#1E7E34]"></i>
+            <span>Eliminación de Distorsiones Odométricas</span>
+          </div>
+          <p class="text-slate-600">
+            Este enfoque evita promediar directamente los odómetros absolutos (lo que arrojaría valores matemáticamente erróneos) y se enfoca en el diferencial de avance neto recorrido en el periodo.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <div class="flex items-center gap-2 text-slate-900 font-bold">
+            <i data-lucide="check" class="w-4 h-4 text-[#1E7E34]"></i>
+            <span>Capacidad Predictiva Fidedigna</span>
+          </div>
+          <p class="text-slate-600">
+            Permite proyectar de forma altamente confiable el día en que la unidad alcanzará el kilometraje normativo de su siguiente servicio preventivo (ej. cada 10,000 km o 15,000 km).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Línea de Tiempo y Transición de Metodologías -->
+    <section class="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/80 shadow-sm space-y-6">
+      <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+        <div class="w-10 h-10 rounded-xl bg-[#1E7E34]/10 text-[#1E7E34] flex items-center justify-center">
+          <i data-lucide="git-commit" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="text-xs font-bold text-[#1E7E34] uppercase tracking-wider">Sección 04</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900">Línea de Tiempo y Transición de Metodologías</h2>
+        </div>
+      </div>
+
+      <p class="text-sm text-slate-600">
+        Para garantizar la continuidad analítica, la coherencia de reportes y no penalizar registros históricos de periodos previos, el modelo contempla tres etapas temporales:
+      </p>
+
+      <div class="relative border-l-2 border-slate-200 ml-4 pl-6 space-y-8 py-2">
+
+        <!-- Fase 1 -->
+        <div class="relative">
+          <div class="absolute -left-[33px] top-1 w-4 h-4 rounded-full bg-slate-400 border-4 border-white shadow"></div>
+          <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-2">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <span class="text-xs font-black uppercase tracking-wider text-slate-600 bg-slate-200 px-2.5 py-0.5 rounded-full">Fase 1</span>
+              <span class="text-xs font-semibold text-slate-500">Hasta el 31 de Agosto de 2026</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">Histórico Previo</h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Al no existir capturas congeladas previas, el criterio evalúa directamente los <strong>ingresos reales ejecutados</strong> validados en el Historial de Estatus (comportamiento operativo). Todo vehículo con estatus preventivo concluido dentro del mes evaluado (<code class="bg-slate-200 text-slate-800 px-1 py-0.5 rounded text-xs">Fecha_Ultimo_Mtto_Historial / FECHA CERRO</code>) se clasifica automáticamente como <strong>CUMPLIDO</strong>.
+            </p>
+          </div>
+        </div>
+
+        <!-- Fase 2 -->
+        <div class="relative">
+          <div class="absolute -left-[33px] top-1 w-4 h-4 rounded-full bg-[#F59E0B] border-4 border-white shadow"></div>
+          <div class="bg-amber-50/50 p-5 rounded-2xl border border-amber-200 space-y-3">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <span class="text-xs font-black uppercase tracking-wider text-amber-800 bg-amber-200/80 px-2.5 py-0.5 rounded-full">Fase 2 &bull; Transición Híbrida</span>
+              <span class="text-xs font-semibold text-amber-700">1 al 30 de Septiembre de 2026</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">Periodo de Transición Quincenal</h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+              <div class="p-3 bg-white rounded-xl border border-amber-200 text-xs space-y-1">
+                <span class="font-bold text-slate-800 block">Primera Quincena (1 al 14 de Septiembre):</span>
+                <p class="text-slate-600">Aplica el criterio de ingresos reales validados por fecha de cierre de evento; cualquier servicio preventivo cerrado antes del 15 de septiembre cuenta automáticamente como <strong>CUMPLIDO</strong> (Ejemplo: unidad <code>E1CP015</code> atendida el 03/09/2026).</p>
+              </div>
+              <div class="p-3 bg-white rounded-xl border border-amber-200 text-xs space-y-1">
+                <span class="font-bold text-slate-800 block">Segunda Quincena (15 al 30 de Septiembre):</span>
+                <p class="text-slate-600">Inicia la evaluación formal contrastando el servicio contra la proyección congelada en el histórico de mantenimientos programados.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fase 3 -->
+        <div class="relative">
+          <div class="absolute -left-[33px] top-1 w-4 h-4 rounded-full bg-[#1E7E34] border-4 border-white shadow"></div>
+          <div class="bg-emerald-50/50 p-5 rounded-2xl border border-emerald-200 space-y-2">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <span class="text-xs font-black uppercase tracking-wider text-emerald-800 bg-emerald-200/80 px-2.5 py-0.5 rounded-full">Fase 3 &bull; Estándar Definitivo</span>
+              <span class="text-xs font-semibold text-emerald-700">1 de Octubre de 2026 en adelante</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">Operación Continua y Homologada</h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              La totalidad de la flota vehicular se evalúa comparando la <strong>fecha real de servicio ejecutado</strong> (validada con la fecha en que el evento cerró en el historial de estatus) contra la <strong>fecha proyectada congelada</strong>, aplicando de manera estricta y transparente la <strong class="text-slate-800">Ventana de Tolerancia Operativa</strong>.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. Regla de Negocio: Ventana de Tolerancia Operativa -->
+    <section class="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/80 shadow-sm space-y-6">
+      <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+        <div class="w-10 h-10 rounded-xl bg-[#1E7E34]/10 text-[#1E7E34] flex items-center justify-center">
+          <i data-lucide="clock" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="text-xs font-bold text-[#1E7E34] uppercase tracking-wider">Sección 05</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900">Regla de Negocio: Ventana de Tolerancia Operativa</h2>
+        </div>
+      </div>
+
+      <p class="text-sm text-slate-700 leading-relaxed">
+        Tomando en cuenta la disponibilidad logística de unidades en ruta, cambios de turnos operativos y las capacidades dinámicas de bahías en taller, la evaluación de mantenimiento <strong>no exige el cumplimiento en un día calendario fijo</strong>, sino dentro de un rango regulatorio denominado <strong>Ventana de Tolerancia Operativa</strong>:
+      </p>
+
+      <!-- Definiciones clave -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Concepto Base</span>
+          <h3 class="text-base font-bold text-slate-900">Mes Proyectado</h3>
+          <p class="text-xs text-slate-600">Mes calendario en el que estaba originalmente programado el servicio de la unidad según el plan congelado de mantenimiento.</p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-2">
+          <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">Periodo Normativo</span>
+          <h3 class="text-base font-bold text-emerald-950">Ventana de Tolerancia</h3>
+          <p class="text-xs text-emerald-800">Comprende <strong>todo el mes calendario posterior al mes proyectado</strong> para efectuar el servicio preventivo sin considerarse vencido ni fuera de norma.</p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Fórmula Técnica</span>
+          <h3 class="text-base font-bold text-slate-900">Límite Operativo</h3>
+          <div class="text-xs font-mono text-slate-800 bg-white p-2 rounded border border-slate-200">
+            $$\text{Límite} = \text{EOMONTH}(\text{FechaProyectada}, 1)$$
+          </div>
+          <p class="text-[11px] text-slate-500">Último día natural del mes posterior a la fecha proyectada.</p>
+        </div>
+      </div>
+
+      <!-- Ejemplo de Aplicación Práctica -->
+      <div class="p-6 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 text-white space-y-4">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <span class="text-xs font-bold uppercase tracking-wider text-[#91DD37] flex items-center gap-1.5">
+            <i data-lucide="check-circle" class="w-4 h-4"></i> Caso Práctico Demostrativo
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Unidad Programada: 25 de Septiembre de 2026</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+          <div class="bg-white/10 p-3 rounded-xl backdrop-blur">
+            <span class="text-slate-400 block text-[11px]">Inicio Periodo Válido</span>
+            <span class="font-bold text-sm text-white">01 / Sep / 2026</span>
+          </div>
+          <div class="bg-white/10 p-3 rounded-xl backdrop-blur">
+            <span class="text-slate-400 block text-[11px]">Fecha Proyectada Original</span>
+            <span class="font-bold text-sm text-[#FFBC00]">25 / Sep / 2026</span>
+          </div>
+          <div class="bg-white/10 p-3 rounded-xl backdrop-blur">
+            <span class="text-slate-400 block text-[11px]">Límite Ventana Tolerancia</span>
+            <span class="font-bold text-sm text-[#91DD37]">31 / Oct / 2026</span>
+          </div>
+          <div class="bg-white/10 p-3 rounded-xl backdrop-blur">
+            <span class="text-slate-400 block text-[11px]">Fecha de Vencimiento</span>
+            <span class="font-bold text-sm text-red-400">01 / Nov / 2026</span>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-white/5 border border-white/10 text-xs sm:text-sm space-y-2">
+          <p class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-[#1E7E34]"></span>
+            <span>Si el servicio se ejecuta entre el <strong>1 de septiembre y el 31 de octubre de 2026</strong> &rarr; <strong class="text-[#91DD37]">CUMPLIDO</strong>.</span>
+          </p>
+          <p class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-red-500"></span>
+            <span>Si al <strong>1 de noviembre de 2026</strong> no existe registro de servicio preventivo concluido en el Historial de Estatus &rarr; <strong class="text-red-400">VENCIDO</strong>.</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Catálogo de Estatus y Códigos de Color Oficiales -->
+    <section class="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/80 shadow-sm space-y-6">
+      <div class="flex items-center justify-between flex-wrap gap-2 border-b border-slate-100 pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#1E7E34]/10 text-[#1E7E34] flex items-center justify-center">
+            <i data-lucide="palette" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <span class="text-xs font-bold text-[#1E7E34] uppercase tracking-wider">Sección 06</span>
+            <h2 class="text-xl sm:text-2xl font-black text-slate-900">Catálogo de Estatus y Semáforo Oficial</h2>
+          </div>
+        </div>
+        <span class="text-xs text-slate-500 font-medium">Parámetros cromáticos normativos para tableros de control</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs sm:text-sm border-collapse">
+          <thead>
+            <tr class="bg-slate-100 text-slate-700 uppercase font-black text-[11px] tracking-wider border-b border-slate-200">
+              <th class="py-3 px-4 rounded-tl-xl">Estatus</th>
+              <th class="py-3 px-3">Color Visual</th>
+              <th class="py-3 px-3">Código HEX</th>
+              <th class="py-3 px-3">Fuente</th>
+              <th class="py-3 px-4 rounded-tr-xl">Criterio de Negocio y Rango Operativo</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <!-- CUMPLIDO -->
+            <tr class="hover:bg-slate-50/80 transition">
+              <td class="py-3.5 px-4 font-bold">
+                <span class="inline-block px-3 py-1 rounded-md text-xs font-extrabold uppercase shadow-sm" style="background-color: #1E7E34; color: #FFFFFF;">
+                  CUMPLIDO
+                </span>
+              </td>
+              <td class="py-3.5 px-3">
+                <div class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full border border-slate-300" style="background-color: #1E7E34;"></span>
+                  <span class="text-xs font-semibold text-slate-700">Verde</span>
+                </div>
+              </td>
+              <td class="py-3.5 px-3 font-mono font-bold text-slate-700">#1E7E34</td>
+              <td class="py-3.5 px-3 text-slate-600 font-mono text-xs">#FFFFFF</td>
+              <td class="py-3.5 px-4 text-slate-700">
+                Unidad cuyo evento de mantenimiento concluyó y cerró efectivamente dentro del periodo programado o dentro de su ventana de tolerancia operativa.
+              </td>
+            </tr>
+
+            <!-- EN TIEMPO -->
+            <tr class="hover:bg-slate-50/80 transition">
+              <td class="py-3.5 px-4 font-bold">
+                <span class="inline-block px-3 py-1 rounded-md text-xs font-extrabold uppercase shadow-sm" style="background-color: #1E7E34; color: #FFFFFF;">
+                  EN TIEMPO
+                </span>
+              </td>
+              <td class="py-3.5 px-3">
+                <div class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full border border-slate-300" style="background-color: #1E7E34;"></span>
+                  <span class="text-xs font-semibold text-slate-700">Verde</span>
+                </div>
+              </td>
+              <td class="py-3.5 px-3 font-mono font-bold text-slate-700">#1E7E34</td>
+              <td class="py-3.5 px-3 text-slate-600 font-mono text-xs">#FFFFFF</td>
+              <td class="py-3.5 px-4 text-slate-700">
+                Unidad pendiente de servicio preventivo con <strong>más de 30 días disponibles</strong> antes de concluir su ventana de tolerancia operativa.
+              </td>
+            </tr>
+
+            <!-- PROGRAMAR -->
+            <tr class="hover:bg-slate-50/80 transition">
+              <td class="py-3.5 px-4 font-bold">
+                <span class="inline-block px-3 py-1 rounded-md text-xs font-extrabold uppercase shadow-sm" style="background-color: #FBBF24; color: #000000;">
+                  PROGRAMAR
+                </span>
+              </td>
+              <td class="py-3.5 px-3">
+                <div class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full border border-slate-300" style="background-color: #FBBF24;"></span>
+                  <span class="text-xs font-semibold text-slate-700">Amarillo</span>
+                </div>
+              </td>
+              <td class="py-3.5 px-3 font-mono font-bold text-slate-700">#FBBF24</td>
+              <td class="py-3.5 px-3 text-slate-600 font-mono text-xs">#000000</td>
+              <td class="py-3.5 px-4 text-slate-700">
+                Unidad pendiente a la que le restan <strong>entre 16 y 30 días</strong> para agotar su ventana de tolerancia. Requiere gestión activa y confirmación de cita en taller.
+              </td>
+            </tr>
+
+            <!-- PRÓXIMO -->
+            <tr class="hover:bg-slate-50/80 transition">
+              <td class="py-3.5 px-4 font-bold">
+                <span class="inline-block px-3 py-1 rounded-md text-xs font-extrabold uppercase shadow-sm" style="background-color: #F59E0B; color: #000000;">
+                  PRÓXIMO
+                </span>
+              </td>
+              <td class="py-3.5 px-3">
+                <div class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full border border-slate-300" style="background-color: #F59E0B;"></span>
+                  <span class="text-xs font-semibold text-slate-700">Ámbar</span>
+                </div>
+              </td>
+              <td class="py-3.5 px-3 font-mono font-bold text-slate-700">#F59E0B</td>
+              <td class="py-3.5 px-3 text-slate-600 font-mono text-xs">#000000</td>
+              <td class="py-3.5 px-4 text-slate-700">
+                Unidad con <strong>8 a 15 días restantes</strong> antes del límite operativo. Nivel de alerta preventiva intermedia.
+              </td>
+            </tr>
+
+            <!-- CRÍTICO -->
+            <tr class="hover:bg-slate-50/80 transition">
+              <td class="py-3.5 px-4 font-bold">
+                <span class="inline-block px-3 py-1 rounded-md text-xs font-extrabold uppercase shadow-sm" style="background-color: #E65100; color: #FFFFFF;">
+                  CRÍTICO
+                </span>
+              </td>
+              <td class="py-3.5 px-3">
+                <div class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full border border-slate-300" style="background-color: #E65100;"></span>
+                  <span class="text-xs font-semibold text-slate-700">Naranja</span>
+                </div>
+              </td>
+              <td class="py-3.5 px-3 font-mono font-bold text-slate-700">#E65100</td>
+              <td class="py-3.5 px-3 text-slate-600 font-mono text-xs">#FFFFFF</td>
+              <td class="py-3.5 px-4 text-slate-700">
+                Unidad con <strong>7 días o menos disponibles</strong> en su ventana de tolerancia. Prioridad inmediata de atención y retención logística si es necesario.
+              </td>
+            </tr>
+
+            <!-- VENCIDO -->
+            <tr class="hover:bg-slate-50/80 transition">
+              <td class="py-3.5 px-4 font-bold">
+                <span class="inline-block px-3 py-1 rounded-md text-xs font-extrabold uppercase shadow-sm" style="background-color: #B71C1C; color: #FFFFFF;">
+                  VENCIDO
+                </span>
+              </td>
+              <td class="py-3.5 px-3">
+                <div class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full border border-slate-300" style="background-color: #B71C1C;"></span>
+                  <span class="text-xs font-semibold text-slate-700">Rojo</span>
+                </div>
+              </td>
+              <td class="py-3.5 px-3 font-mono font-bold text-slate-700">#B71C1C</td>
+              <td class="py-3.5 px-3 text-slate-600 font-mono text-xs">#FFFFFF</td>
+              <td class="py-3.5 px-4 text-slate-700">
+                Se superó la fecha límite de la ventana de tolerancia operativa sin registrar evento concluido, o el mantenimiento se ejecutó de forma extemporánea fuera de norma.
+              </td>
+            </tr>
+
+            <!-- SIN INFORMACIÓN -->
+            <tr class="hover:bg-slate-50/80 transition">
+              <td class="py-3.5 px-4 font-bold">
+                <span class="inline-block px-3 py-1 rounded-md text-xs font-extrabold uppercase shadow-sm" style="background-color: #6B7280; color: #FFFFFF;">
+                  SIN INFORMACIÓN
+                </span>
+              </td>
+              <td class="py-3.5 px-3">
+                <div class="flex items-center gap-2">
+                  <span class="w-4 h-4 rounded-full border border-slate-300" style="background-color: #6B7280;"></span>
+                  <span class="text-xs font-semibold text-slate-700">Gris</span>
+                </div>
+              </td>
+              <td class="py-3.5 px-3 font-mono font-bold text-slate-700">#6B7280</td>
+              <td class="py-3.5 px-3 text-slate-600 font-mono text-xs">#FFFFFF</td>
+              <td class="py-3.5 px-4 text-slate-700">
+                Unidades vehiculares con fecha ficticia por omisión del sistema (año 1900) o sin parámetros base configurados en la Base Vehicular.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 7. Preguntas Frecuentes (FAQ Operativo) -->
+    <section class="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/80 shadow-sm space-y-6">
+      <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+        <div class="w-10 h-10 rounded-xl bg-[#1E7E34]/10 text-[#1E7E34] flex items-center justify-center">
+          <i data-lucide="help-circle" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="text-xs font-bold text-[#1E7E34] uppercase tracking-wider">Sección 07</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900">Preguntas Frecuentes (FAQ Operativo)</h2>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <!-- FAQ 1 -->
+        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <span class="text-[#1E7E34]">&bull;</span>
+            ¿Por qué unidades con servicio en septiembre mostraban proyecciones para diciembre o 2027?
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed pl-4">
+            Porque los sistemas informáticos de flota recalculan el próximo mantenimiento de manera inmediata tras registrar que el evento en taller cerró. El modelo analítico toma la <strong>fecha real del evento cerrado</strong> registrada en el Historial de Estatus para validar que el servicio se ejecutó en el periodo correspondiente, evitando que el recálculo proyectado hacia el futuro oculte o distorsione el cumplimiento actual.
+          </p>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <span class="text-[#1E7E34]">&bull;</span>
+            ¿Por qué es fundamental la descarga diaria de Kilómetros Acumulados para el promedio móvil?
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed pl-4">
+            Sin la persistencia histórica diaria, el sistema únicamente contaría con una lectura aislada y puntual de odómetro. La serie histórica permite tomar el kilometraje inicial de hace aproximadamente 60 días y contrastarlo contra el odómetro actual, obteniendo un <strong>recorrido diario promedio fidedigno</strong> que neutraliza variaciones atípicas de operación.
+          </p>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <span class="text-[#1E7E34]">&bull;</span>
+            ¿Cómo se previene la duplicidad en el conteo de septiembre?
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed pl-4">
+            La formulación unificada suma los ingresos válidos de la primera quincena y descuenta mediante exclusión cruzada (<code class="bg-slate-200 text-slate-800 px-1 py-0.5 rounded text-xs">NOT IN</code>) cualquier registro repetido en el archivo histórico congelado. Esto evita la doble contabilidad en el periodo de transición.
+          </p>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <span class="text-[#1E7E34]">&bull;</span>
+            ¿Qué tratamiento reciben las fechas de año 1900?
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed pl-4">
+            Corresponden a valores nulos o campos por defecto en unidades recién incorporadas a la Base Vehicular o sin histórico capturado. Se agrupan bajo el estatus neutral <strong>SIN INFORMACIÓN</strong> para no distorsionar las métricas de atraso real ni contaminar el porcentaje de cumplimiento operativo.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Simulador Interactivo de Ventana de Tolerancia y Estatus -->
+    <section class="no-print bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/80 shadow-sm space-y-6">
+      <div class="flex items-center justify-between flex-wrap gap-2 border-b border-slate-100 pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+            <i data-lucide="calculator" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Herramienta de Consulta Rápida</span>
+            <h2 class="text-xl sm:text-2xl font-black text-slate-900">Calculadora de Ventana de Tolerancia Operativa</h2>
+          </div>
+        </div>
+        <span class="text-xs text-slate-500">Prueba cómo se clasifica cualquier unidad en tiempo real</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+            Fecha Proyectada Original de la Unidad:
+          </label>
+          <input 
+            type="date" 
+            id="input-fecha-proyectada" 
+            value="2026-09-25" 
+            class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#1E7E34] text-sm font-semibold text-slate-800"
+            onchange="calcularEstatusOperativo()"
+          />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+            Estado de Atención / Fecha de Cierre de Servicio (FECHA CERRO):
+          </label>
+          <div class="flex gap-2">
+            <input 
+              type="date" 
+              id="input-fecha-ejecucion" 
+              value="2026-10-12"
+              class="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#1E7E34] text-sm font-semibold text-slate-800"
+              onchange="calcularEstatusOperativo()"
+            />
+            <button 
+              type="button" 
+              onclick="limpiarEjecucion()" 
+              class="px-3 py-2 text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition"
+            >
+              Pendiente
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resultado de la Evaluación Simulada -->
+      <div id="simulador-resultado" class="p-6 rounded-2xl border transition-all">
+        <!-- Generado dinámicamente con JavaScript -->
+      </div>
+    </section>
+
+    <!-- Resumen de Auditoría / Footer -->
+    <footer class="text-center py-6 text-xs text-slate-500 space-y-1">
+      <p class="font-bold text-slate-700">Manual Operativo de Mantenimiento de Flota &bull; Modelo de Ventana de Tolerancia Operativa</p>
+      <p>Criterio Normativo Homologado &bull; Sistema de Gestión Integral de Mantenimiento</p>
+    </footer>
+
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      calcularEstatusOperativo();
+    });
+
+    function limpiarEjecucion() {
+      document.getElementById('input-fecha-ejecucion').value = '';
+      calcularEstatusOperativo();
+    }
+
+    function calcularEstatusOperativo() {
+      const projInput = document.getElementById('input-fecha-proyectada').value;
+      const execInput = document.getElementById('input-fecha-ejecucion').value;
+      const resultadoDiv = document.getElementById('simulador-resultado');
+
+      if (!projInput) {
+        resultadoDiv.className = 'p-6 rounded-2xl bg-gray-50 border border-gray-200 text-slate-600 text-sm';
+        resultadoDiv.innerHTML = '<p class="font-semibold">Por favor ingresa una fecha proyectada válida.</p>';
+        return;
+      }
+
+      const projDate = new Date(projInput + 'T00:00:00');
+      // Inicio periodo válido: primer día del mes proyectado
+      const inicioPeriodo = new Date(projDate.getFullYear(), projDate.getMonth(), 1);
+      // Fin de la ventana: último día del mes posterior (EOMONTH(Fecha, 1))
+      const finVentana = new Date(projDate.getFullYear(), projDate.getMonth() + 2, 0);
+
+      // Fecha hoy de referencia del contexto operativo: 1 de Octubre de 2026
+      const hoyReferencia = new Date(2026, 9, 1);
+
+      let estatus = '';
+      let hexColor = '';
+      let textColor = '';
+      let explicacion = '';
+
+      if (execInput) {
+        const execDate = new Date(execInput + 'T00:00:00');
+        if (execDate >= inicioPeriodo && execDate <= finVentana) {
+          estatus = 'CUMPLIDO';
+          hexColor = '#1E7E34';
+          textColor = '#FFFFFF';
+          explicacion = `La unidad cerró su mantenimiento el ${execDate.toLocaleDateString('es-MX')} dentro de la ventana de tolerancia válida (del ${inicioPeriodo.toLocaleDateString('es-MX')} al ${finVentana.toLocaleDateString('es-MX')}).`;
+        } else if (execDate > finVentana) {
+          estatus = 'VENCIDO (Cerrado Fuera de Norma)';
+          hexColor = '#B71C1C';
+          textColor = '#FFFFFF';
+          explicacion = `El servicio se concluyó el ${execDate.toLocaleDateString('es-MX')}, excediendo el límite de la ventana (${finVentana.toLocaleDateString('es-MX')}). Computa extemporáneo.`;
+        } else {
+          estatus = 'CUMPLIDO ANTICIPADO';
+          hexColor = '#1E7E34';
+          textColor = '#FFFFFF';
+          explicacion = `El servicio se realizó con antelación el ${execDate.toLocaleDateString('es-MX')}.`;
+        }
+      } else {
+        // Unidad pendiente: calculamos días restantes contra finVentana tomando como base hoyReferencia
+        const diffTiempo = finVentana.getTime() - hoyReferencia.getTime();
+        const diasRestantes = Math.ceil(diffTiempo / (1000 * 3600 * 24));
+
+        if (diasRestantes < 0) {
+          estatus = 'VENCIDO';
+          hexColor = '#B71C1C';
+          textColor = '#FFFFFF';
+          explicacion = `La ventana de tolerancia expiró el ${finVentana.toLocaleDateString('es-MX')} sin registrar evento cerrado en el Historial de Estatus.`;
+        } else if (diasRestantes <= 7) {
+          estatus = 'CRÍTICO';
+          hexColor = '#E65100';
+          textColor = '#FFFFFF';
+          explicacion = `Restan ${diasRestantes} días para el cierre de la ventana (${finVentana.toLocaleDateString('es-MX')}). Requiere retención inmediata.`;
+        } else if (diasRestantes <= 15) {
+          estatus = 'PRÓXIMO';
+          hexColor = '#F59E0B';
+          textColor = '#000000';
+          explicacion = `Restan ${diasRestantes} días para el cierre de la ventana (${finVentana.toLocaleDateString('es-MX')}). Requiere priorización en taller.`;
+        } else if (diasRestantes <= 30) {
+          estatus = 'PROGRAMAR';
+          hexColor = '#FBBF24';
+          textColor = '#000000';
+          explicacion = `Restan ${diasRestantes} días para el límite normativo (${finVentana.toLocaleDateString('es-MX')}). Debe programarse cita operativa.`;
+        } else {
+          estatus = 'EN TIEMPO';
+          hexColor = '#1E7E34';
+          textColor = '#FFFFFF';
+          explicacion = `Restan ${diasRestantes} días antes del límite normativo (${finVentana.toLocaleDateString('es-MX')}). La unidad cuenta con holgura suficiente.`;
+        }
+      }
+
+      resultadoDiv.style.backgroundColor = hexColor + '10';
+      resultadoDiv.style.borderColor = hexColor + '40';
+      resultadoDiv.innerHTML = `
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-xs uppercase tracking-wider font-bold text-slate-500">Resultado Normativo de Clasificación:</span>
+              <span class="inline-block px-3 py-1 rounded-md text-xs font-extrabold uppercase shadow-sm" style="background-color: ${hexColor}; color: ${textColor};">
+                ${estatus}
+              </span>
+            </div>
+            <p class="text-sm font-semibold text-slate-800">${explicacion}</p>
+          </div>
+          <div class="text-xs bg-white p-3 rounded-xl border border-slate-200 text-slate-600 space-y-1">
+            <div><span class="font-bold text-slate-800">Límite Normativo:</span> ${finVentana.toLocaleDateString('es-MX')}</div>
+            <div><span class="font-bold text-slate-800">Fórmula:</span> EOMONTH(FechaProyectada, 1)</div>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
